@@ -6,7 +6,6 @@ Portfolio project: corn yield prediction from weather and seasonal features, wit
 
 1. **Data:** Put raw inputs under `data/raw/` (see Pipeline order below), then run `dawn_data_creation.ipynb` to create `data/merged.csv` and cluster CSVs. If you already have these files, place them in `data/`.
 2. **Models:** Run `dawn_models_clean.ipynb` (it reads from `data/`).
-3. **Before pushing:** Run `python clean_notebooks.py` to strip notebook outputs.
 
 ## Repo structure
 
@@ -28,16 +27,7 @@ Portfolio project: corn yield prediction from weather and seasonal features, wit
 3. **Explore** — Optionally run `dawn_mapping.ipynb` for station/county maps.
 4. **Models** — Run `dawn_models_clean.ipynb`; it reads from `data/`. Use Section 2 (tuning) to re-optimize season dates or hyperparameters if desired.
 
-## What to put on GitHub
-
-- **Keep:** `dawn_config.py`, `dawn_data_creation.ipynb`, `dawn_mapping.ipynb`, `dawn_models_clean.ipynb`, `dawn_features.py`, `dawn_models.py`, `dawn_tuning.py`, `clean_notebooks.py`, `.gitignore`, this README.
-- **Don’t commit:** Large `data/*.csv` outputs, `data/raw/` inputs, or `dawn_models.ipynb` (original long notebook) unless you want it.
-
 ## Requirements
 
 - Python 3.8+
 - pandas, numpy, scikit-learn, geopandas, shapely, geopy (for data creation and mapping); xgboost optional for tuning variants.
-
-## Before you push
-
-Run `python clean_notebooks.py` to clear notebook outputs and execution counts.
