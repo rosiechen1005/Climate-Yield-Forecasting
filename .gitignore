@@ -1,0 +1,10 @@
+# Jupyter
+.ipynb_checkpoints/
+
+# Python
+__pycache__/
+*.pyc
+
+# Data (optional: uncomment if you don't want to commit data/)
+# data/*.csv
+# data/raw/
