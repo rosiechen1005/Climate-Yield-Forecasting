@@ -1,33 +1,47 @@
-# Dawn internship — Corn yield & climate
+# DAWN Internship — Climate-Based Corn Yield Forecasting
 
-Portfolio project: corn yield prediction from weather and seasonal features, with clustering and residual-stacking models.
+Developed during the DAWN Internship (ESSIC, University of Maryland; USDA NIFA-funded)
 
-## Quick start
+## Overview
 
-1. **Data:** Put raw inputs under `data/raw/` (see Pipeline order below), then run `dawn_data_creation.ipynb` to create `data/merged.csv` and cluster CSVs. If you already have these files, place them in `data/`.
-2. **Models:** Run `dawn_models_clean.ipynb` (it reads from `data/`).
+Built a multi-decade climate–yield forecasting framework integrating 50+ years of USDA yield and meteorological data (1M+ records) to model Corn Belt production under heterogeneous climate regimes.
 
-## Repo structure
+The project combined large-scale ETL, spatial joins, seasonal climate feature engineering, and cluster-specific ensemble modeling to improve predictive performance and extract interpretable climate drivers.
 
-| Item | Purpose |
-|------|--------|
-| **dawn_config.py** | Shared paths and constants: `DATA_DIR`, `RAW_DATA_DIR`, yield/MET/shapefile paths, `CORN_BELT_STATES`. |
-| **dawn_data_creation.ipynb** | Builds `data/merged.csv` (and optionally cluster CSVs): load yield + MET from `data/raw/`, detrend, assign stations to counties, merge. |
-| **dawn_mapping.ipynb** | Exploratory mapping: spring means by station, state/corn-belt maps, cluster map. Reads from `data/merged.csv`. |
-| **dawn_models_clean.ipynb** | Main modeling: load from `data/`, feature engineering, baseline → RF → final (residual stacking), final evaluation table. |
-| **dawn_features.py** | Feature engineering (`build_features`, seasonal/anomaly/clear-day). Used by models and tuning. |
-| **dawn_models.py** | Model pipelines and cluster configs: `run_baseline_rf`, `run_rf_engineered`, `run_final_model`, `CLUSTER_CONFIGS`. |
-| **dawn_tuning.py** | Optional tuning: binary/random search for season dates, hyperparameter search for `clear_thresh` and `anomaly_percentile`. |
-| **data/** | Outputs: `merged.csv`, `cluster0_MI_MN_WI.csv`, etc. Raw inputs go under `data/raw/` (see below). |
+## Technical Contributions
 
-## Pipeline order
+- Designed an end-to-end ETL pipeline integrating USDA county-level yield data with NOAA meteorological records
+- Performed station–county spatial assignment using geographic joins
+- Detrended yield to isolate climate-driven variability
+- Clustered regional climate regimes (k-means, 3 clusters)
+- Engineered seasonal aggregates and anomaly-based extreme-heat features
+- Built residual-stacked ensemble models (RF → XGBoost → MLP)
+- Applied PCA dimensionality reduction and MICE imputation
+- Conducted hyperparameter optimization and seasonal boundary tuning
+- Executed experiments on HPC infrastructure (Zaratan cluster)
 
-1. **Raw data** — Place yield CSVs (`data/raw/corn/IA.csv`, ...), MET CSVs (`data/raw/MET/met_IA.csv`, ...), `data/raw/ghcnd-stations.txt`, and the Census county shapefile under `data/raw/cb_2021_us_county_500k/`. Or set `RAW_DATA_DIR` in `dawn_config.py` to another path.
-2. **Data** — Run `dawn_data_creation.ipynb` to produce `data/merged.csv` and (optional) cluster CSVs in `data/`.
-3. **Explore** — Optionally run `dawn_mapping.ipynb` for station/county maps.
-4. **Models** — Run `dawn_models_clean.ipynb`; it reads from `data/`. Use Section 2 (tuning) to re-optimize season dates or hyperparameters if desired.
+## Modeling Architecture
 
-## Requirements
+Baseline → Random Forest → Residual Stacking
 
-- Python 3.8+
-- pandas, numpy, scikit-learn, geopandas, shapely, geopy (for data creation and mapping); xgboost optional for tuning variants.
+1. Random Forest captures nonlinear climate effects  
+2. XGBoost models residual structure  
+3. MLP refines remaining error  
+
+Cluster-specific configurations were applied to account for heterogeneous climate–yield relationships across regions.
+
+## Results
+
+- R² improved from **0.30 → 0.76** (+150%)
+- Stable performance across three climate clusters
+- Identified seasonal Tmax and extreme heat anomalies as dominant yield drivers
+- Outputs translated into interpretable climate-risk indicators supporting ongoing research publication
+
+## Tools
+
+Python • Pandas • NumPy • Scikit-learn • XGBoost • GeoPandas • PCA • MICE • HPC (Zaratan)
+
+## Data Access Note
+
+Raw USDA and meteorological inputs are not included due to internship data agreements.  
+This repository documents the modeling framework and pipeline architecture used during the DAWN Internship.
