@@ -1,4 +1,4 @@
-# DAWN Internship — Climate-Based Corn Yield Forecasting
+# AgriCast-ML — End-to-End Climate Forecasting System for Corn Yield
 
 Developed during the DAWN Internship (ESSIC, University of Maryland; USDA NIFA-funded)
 
