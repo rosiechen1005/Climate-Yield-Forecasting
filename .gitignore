@@ -1,6 +1,5 @@
-# Jupyter
+data/raw/
+data/*.csv
 .ipynb_checkpoints/
-
-# Python
 __pycache__/
-*.pyc
+.DS_Store
